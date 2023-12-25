@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: project-deployment
+
+spec:
+  selector:
+    matchLabels:  
+      app: palestine
+  replicas: 3      
+  template:        
+    metadata:
+      name: project-pod
+      labels:
+        app: palestine      # label for pod to facilate communiation by service 
+    spec:
+      containers:
+        - image: ahmad731/project_image
+          name: project-image
+          imagePullPolicy: IfNotPresent #download if not found else don`t check updates
+          ports:
+            - containerPort: 80   # this port for service   
+          resources:
+            limits:   # for pod 
+              memory: "512Mi"    
+              cpu: "1"
+            requests:
+              memory: "100Mi" 
